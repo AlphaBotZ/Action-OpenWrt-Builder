@@ -43,37 +43,6 @@ function merge_feed(){
 }
 rm -rf package/custom; mkdir package/custom
 
-# 删除软件包
- #rm -rf feeds/packages/net/openssh
- #rm -rf feeds/packages/sound/fdk-aac
- #rm -rf feeds/packages/utils/lvm2
- #rm -rf feeds/packages/utils/tini
- #rm -rf feeds/packages/net/kcptun
- #rm -rf package/lean/ntfs3
- #rm -rf package/lean/luci-app-cpufreq
- #rm include/feeds.mk
- #wget -P include https://raw.githubusercontent.com/openwrt/openwrt/master/include/feeds.mk
- rm -rf package/libs/elfutils
- #rm -rf feeds/packages/utils/gnupg
- #rm -rf feeds/packages/lang/python/python3
- #rm -rf package/lean/n2n_v2
-
-# BTF: fix failed to validate module
-# config/Config-kernel.in patch
-curl -s https://raw.githubusercontent.com/sbwml/r4s_build_script/master/openwrt/patch/generic/0001-kernel-add-MODULE_ALLOW_BTF_MISMATCH-option.patch | patch -p1
-patch -p1 < $GITHUB_WORKSPACE/PATCH/add-xdp-diag.patch
-#atch -p1 < $GITHUB_WORKSPACE/PATCH/lede_add_immotalwrt_download_method.patch
-
-# ARM64: Add CPU model name in proc cpuinfo
-#wget -P target/linux/generic/pending-5.4 https://github.com/immortalwrt/immortalwrt/raw/master/target/linux/generic/hack-5.4/312-arm64-cpuinfo-Add-model-name-in-proc-cpuinfo-for-64bit-ta.patch
-# autocore
-sed -i 's/DEPENDS:=@(.*/DEPENDS:=@(TARGET_bcm27xx||TARGET_bcm53xx||TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x||TARGET_mvebu||TARGET_rockchip||TARGET_armvirt) \\/g' package/lean/autocore/Makefile
-# Add cputemp.sh
-#cp -rf $GITHUB_WORKSPACE/PATCH/new/script/cputemp.sh ./package/base-files/files/bin/cputemp.sh
-
-# Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-
 #添加额外软件包
 #git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
 #git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
