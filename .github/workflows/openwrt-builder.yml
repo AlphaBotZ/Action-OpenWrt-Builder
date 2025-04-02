@@ -132,10 +132,10 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P1_SH
         
    
-    - name: lenyu
+    - name: AlphaBotZ
       run: |
         cd openwrt 
-        bash  lenyu.sh
+        bash  AlphaBotZ.sh
 
 
     - name: Update feeds
