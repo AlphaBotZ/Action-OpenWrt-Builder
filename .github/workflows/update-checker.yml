@@ -1,25 +1,20 @@
 #
-# https://github.com/P3TERX/Actions-OpenWrt
-#
-# File: .github/workflows/update-checker.yml
-# Description: Source code update checker
-#
-# Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
+# Copyright (c) 2019-2024 smallprogram
 #
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 #
+# https://github.com/smallprogram/OpenWrtAction
+# File: .github/workflows/Update_Checker.yml
+# Description: Source code update checker
+#
 
-name: Update Checker
-
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+name: Update_Checker
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: 0 */18 * * *
+  schedule:
+    - cron: 0 */8 * * *
 
 jobs:
   check:
@@ -30,30 +25,75 @@ jobs:
     - name: Get Commit Hash
       id: getHash
       run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
-        echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        git clone https://github.com/coolsnowwolf/lede --filter=blob:none
+        cd lede
+        echo "SHA_01=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        cd
+
+        git clone https://github.com/coolsnowwolf/packages --filter=blob:none
+        cd packages
+        echo "SHA_02=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        cd
+
+        git clone https://github.com/coolsnowwolf/luci --filter=blob:none
+        cd luci
+        echo "SHA_03=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        cd
+        
+        git clone https://github.com/fw876/helloworld --filter=blob:none
+        cd helloworld
+        echo "SHA_04=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        cd
+
+        git clone https://github.com/xiaorouji/openwrt-passwall --filter=blob:none
+        cd openwrt-passwall
+        echo "SHA_05=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        cd
+
+    - name: Show Commit Head and Combination Heads
+      id: combHeader
+      run: |
+        echo "commitHash_All=\
+          ${{steps.getHash.outputs.SHA_01}}\
+          ${{steps.getHash.outputs.SHA_02}}\
+          ${{steps.getHash.outputs.SHA_03}}\
+          ${{steps.getHash.outputs.SHA_04}}\
+          ${{steps.getHash.outputs.SHA_05}}" >> $GITHUB_OUTPUT
 
     - name: Compare Commit Hash
       id: cacheHash
-      uses: actions/cache@v3
+      uses: actions/cache@main
       with:
-        path: .commitHash
-        key: commitHash_${{ steps.getHash.outputs.commitHash }}
+        path: .commitHash_All
+        key: HEAD-${{ steps.combHeader.outputs.commitHash_All }}
+   
 
     - name: Save New Commit Hash
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
-        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+        echo ${{ steps.combHeader.outputs.commitHash_All }} | tee .commitHash_All
+        
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 3
 
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@master
+      with:
+        keep_latest: 5
+        keep_min_download_counts: 2
+        delete_expired_data: 60
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+        
     - name: Trigger build
       if: steps.cacheHash.outputs.cache-hit != 'true'
-      uses: peter-evans/repository-dispatch@v2
+      uses: peter-evans/repository-dispatch@main
       with:
-        token: ${{ github.token }}
-        event-type: Source Code Update
-
-    - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@v2
-      with:
-        retain_days: 0
-        keep_minimum_runs: 2
+        token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+        event-type: openwrt_source_update
