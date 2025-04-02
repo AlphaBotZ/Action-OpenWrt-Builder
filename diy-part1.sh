@@ -20,13 +20,13 @@ echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >
 #
 mkdir -p files/usr/share
 mkdir -p files/etc/
-touch files/etc/lenyu_version
+touch files/etc/AlphaBotZ_version
 mkdir wget
 touch wget/DISTRIB_REVISION1
 touch wget/DISTRIB_REVISION3
 touch files/usr/share/Check_Update.sh
-touch files/usr/share/Lenyu-auto.sh
-touch files/usr/share/Lenyu-pw.sh
+touch files/usr/share/AlphaBotZ-auto.sh
+touch files/usr/share/AlphaBotZ-pw.sh
 
 # backup config
 cat>>/etc/sysupgrade.conf<<-EOF
@@ -61,7 +61,7 @@ rm -rf  bin/targets/x86/64/openwrt-x86-64-generic.manifest
 rm -rf bin/targets/x86/64/sha256sums
 rm -rf  bin/targets/x86/64/version.buildinfo
 sleep 2
-rename_version=`cat files/etc/lenyu_version`
+rename_version=`cat files/etc/AlphaBotZ_version`
 str1=`grep "KERNEL_PATCHVER:="  target/linux/x86/Makefile | cut -d = -f 2` #判断当前默认内核版本号如5.10
 #ver414=`grep "LINUX_VERSION-4.14 ="  include/kernel-4.14 | cut -d . -f 3`
 #ver419=`grep "LINUX_VERSION-4.19 ="  include/kernel-4.19 | cut -d . -f 3`
@@ -71,48 +71,48 @@ ver515=`grep "LINUX_VERSION-5.15 ="  include/kernel-5.15 | cut -d . -f 3`
 ver61=`grep "LINUX_VERSION-6.1 ="  include/kernel-6.1 | cut -d . -f 3`
 ver66=`grep "LINUX_VERSION-6.6 ="  include/kernel-6.6 | cut -d . -f 3`
 if [ "$str1" = "5.4" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver54}_uefi-gpt_dev_AlphaBotZ.img.gz
 elif [ "$str1" = "5.10" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver510}_uefi-gpt_dev_AlphaBotZ.img.gz
 elif [ "$str1" = "5.15" ];then
-   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_Lenyu.img.gz
+   mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver515}_uefi-gpt_dev_AlphaBotZ.img.gz
 elif [ "$str1" = "6.1" ];then
   if [ ! $ver66 ]; then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}0_uefi-gpt_dev_AlphaBotZ.img.gz
  else
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver61}_uefi-gpt_dev_AlphaBotZ.img.gz
    fi 
 elif [ "$str1" = "6.6" ];then
   if [ ! $ver66 ]; then
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}0_uefi-gpt_dev_AlphaBotZ.img.gz
  else
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_Lenyu.img.gz
-  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_Lenyu.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined.img.gz       bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_dev_AlphaBotZ.img.gz
+  mv  bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz   bin/targets/x86/64/openwrt_x86-64-${rename_version}_${str1}.${ver66}_uefi-gpt_dev_AlphaBotZ.img.gz
    fi
 fi
-ls bin/targets/x86/64 | grep "gpt_dev_Lenyu.img" | cut -d - -f 3 | cut -d _ -f 1-2 > wget/op_version1
+ls bin/targets/x86/64 | grep "gpt_dev_AlphaBotZ.img" | cut -d - -f 3 | cut -d _ -f 1-2 > wget/op_version1
 #md5
 ls -l  "bin/targets/x86/64" | awk -F " " '{print $9}' > wget/open_dev_md5
-dev_version=`grep "_uefi-gpt_dev_Lenyu.img.gz" wget/open_dev_md5 | cut -d - -f 3 | cut -d _ -f 1-2`
-openwrt_dev=openwrt_x86-64-${dev_version}_dev_Lenyu.img.gz
-openwrt_dev_uefi=openwrt_x86-64-${dev_version}_uefi-gpt_dev_Lenyu.img.gz
+dev_version=`grep "_uefi-gpt_dev_AlphaBotZ.img.gz" wget/open_dev_md5 | cut -d - -f 3 | cut -d _ -f 1-2`
+openwrt_dev=openwrt_x86-64-${dev_version}_dev_AlphaBotZ.img.gz
+openwrt_dev_uefi=openwrt_x86-64-${dev_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 cd bin/targets/x86/64
 md5sum $openwrt_dev > openwrt_dev.md5
 md5sum $openwrt_dev_uefi > openwrt_dev_uefi.md5
 exit 0
 EOF
 
-cat>lenyu.sh<<-\EOOF
+cat>AlphaBotZ.sh<<-\EOOF
 #!/bin/bash
-lenyu_version="`date '+%y%m%d%H%M'`_dev_Len yu" 
-echo $lenyu_version >  wget/DISTRIB_REVISION1 
-echo $lenyu_version | cut -d _ -f 1 >  files/etc/lenyu_version  
+AlphaBotZ_version="`date '+%y%m%d%H%M'`_dev_Len yu" 
+echo $AlphaBotZ_version >  wget/DISTRIB_REVISION1 
+echo $AlphaBotZ_version | cut -d _ -f 1 >  files/etc/AlphaBotZ_version  
 #######
 new_DISTRIB_REVISION=`cat  wget/DISTRIB_REVISION1`
 grep "DISTRIB_REVISION="  package/lean/default-settings/files/zzz-default-settings | cut -d \' -f 2 >  wget/DISTRIB_REVISION3
@@ -123,26 +123,26 @@ grep "Check_Update.sh"  package/lean/default-settings/files/zzz-default-settings
 if [ $? != 0 ]; then
 	sed -i 's/exit 0/ /'  package/lean/default-settings/files/zzz-default-settings
 	cat>> package/lean/default-settings/files/zzz-default-settings<<-EOF
-	sed -i '$ a alias lenyu="sh /usr/share/Check_Update.sh"' /etc/profile
+	sed -i '$ a alias AlphaBotZ="sh /usr/share/Check_Update.sh"' /etc/profile
 	chmod 755 /etc/init.d/romupdate
 	exit 0
 	EOF
 fi
-grep "Lenyu-auto.sh"  package/lean/default-settings/files/zzz-default-settings
+grep "AlphaBotZ-auto.sh"  package/lean/default-settings/files/zzz-default-settings
 if [ $? != 0 ]; then
 	sed -i 's/exit 0/ /'  package/lean/default-settings/files/zzz-default-settings
 	cat>> package/lean/default-settings/files/zzz-default-settings<<-EOF
-	sed -i '$ a alias lenyu-auto="sh /usr/share/Lenyu-auto.sh"' /etc/profile
+	sed -i '$ a alias AlphaBotZ-auto="sh /usr/share/AlphaBotZ-auto.sh"' /etc/profile
 	chmod 755 /etc/init.d/romupdate
 	exit 0
 	EOF
 fi
 
-grep "Lenyu-pw.sh"  package/lean/default-settings/files/zzz-default-settings
+grep "AlphaBotZ-pw.sh"  package/lean/default-settings/files/zzz-default-settings
 if [ $? != 0 ]; then
 	sed -i 's/exit 0/ /'  package/lean/default-settings/files/zzz-default-settings
 	cat>> package/lean/default-settings/files/zzz-default-settings<<-EOF
-	sed -i '$ a alias lenyu-pw="sh /usr/share/Lenyu-pw.sh"' /etc/profile
+	sed -i '$ a alias AlphaBotZ-pw="sh /usr/share/AlphaBotZ-pw.sh"' /etc/profile
 	chmod 755 /etc/init.d/romupdate
 	exit 0
 	EOF
@@ -173,48 +173,48 @@ EOOF
 
 cat>files/usr/share/Check_Update.sh<<-\EOF
 #!/bin/bash
-# https://github.com/Lenyu2020/Actions-OpenWrt-x86
-# Actions-OpenWrt-x86 By Lenyu 20210505
+# https://github.com/AlphaBotZ/Action-OpenWrt-Builder
+# Action-OpenWrt-Builder By AlphaBotZ 20210505
 #path=$(dirname $(readlink -f $0))
 # cd ${path}
 #检测准备
-if [ ! -f  "/etc/lenyu_version" ]; then
+if [ ! -f  "/etc/AlphaBotZ_version" ]; then
 	echo
-	echo -e "\033[31m 该脚本在非Lenyu固件上运行，为避免不必要的麻烦，准备退出… \033[0m"
+	echo -e "\033[31m 该脚本在非AlphaBotZ固件上运行，为避免不必要的麻烦，准备退出… \033[0m"
 	echo
 	exit 0
 fi
 rm -f /tmp/cloud_version
 # 获取固件云端版本号、内核版本号信息
-current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Lenyu2020/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+current_version=`cat /etc/AlphaBotZ_version`
+wget -qO- -t1 -T2 "https://api.github.com/repos/AlphaBotZ/Action-OpenWrt-Builder/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
 	#固件下载地址
 	new_version=`cat /tmp/cloud_ts_version`
-	DEV_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
-	DEV_UEFI_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
-	openwrt_dev=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
-	openwrt_dev_uefi=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
+	DEV_URL=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
+	DEV_UEFI_URL=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
+	openwrt_dev=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_dev.md5
+	openwrt_dev_uefi=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_dev_uefi.md5
 else
 	echo "请检测网络或重试！"
 	exit 1
 fi
 ####
 Firmware_Type="$(grep 'DISTRIB_ARCH=' /etc/openwrt_release | cut -d \' -f 2)"
-echo $Firmware_Type > /etc/lenyu_firmware_type
+echo $Firmware_Type > /etc/AlphaBotZ_firmware_type
 echo
 if [[ "$cloud_kernel" =~ "4.19" ]]; then
 	echo
-	echo -e "\033[31m 该脚本在Lenyu固件Sta版本上运行，目前只建议在Dev版本上运行，准备退出… \033[0m"
+	echo -e "\033[31m 该脚本在AlphaBotZ固件Sta版本上运行，目前只建议在Dev版本上运行，准备退出… \033[0m"
 	echo
 	exit 0
 fi
 #md5值验证，固件类型判断
 if [ ! -d /sys/firmware/efi ];then
 	if [ "$current_version" != "$cloud_version" ];then
-		wget -P /tmp "$DEV_URL" -O /tmp/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+		wget -P /tmp "$DEV_URL" -O /tmp/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
 		wget -P /tmp "$openwrt_dev" -O /tmp/openwrt_dev.md5
 		cd /tmp && md5sum -c openwrt_dev.md5
 		if [ $? != 0 ]; then
@@ -230,7 +230,7 @@ if [ ! -d /sys/firmware/efi ];then
 	fi
 else
 	if [ "$current_version" != "$cloud_version" ];then
-		wget -P /tmp "$DEV_UEFI_URL" -O /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+		wget -P /tmp "$DEV_UEFI_URL" -O /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 		wget -P /tmp "$openwrt_dev_uefi" -O /tmp/openwrt_dev_uefi.md5
 		cd /tmp && md5sum -c openwrt_dev_uefi.md5
 		if [ $? != 0 ]; then
@@ -259,9 +259,9 @@ case $num1 in
 	echo
 	sleep 3
 	if [ ! -d /sys/firmware/efi ];then
-		sysupgrade /tmp/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz		
+		sysupgrade /tmp/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz		
 	else
-		sysupgrade /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+		sysupgrade /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 	fi
     ;;
     n|N)
@@ -270,9 +270,9 @@ case $num1 in
     echo
     sleep 3
 	if [ ! -d /sys/firmware/efi ];then
-		sysupgrade -n  /tmp/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+		sysupgrade -n  /tmp/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
 	else
-		sysupgrade -n  /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+		sysupgrade -n  /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 	fi
     ;;
     *)
@@ -313,16 +313,16 @@ open_op
 exit 0
 EOF
 
-cat>files/usr/share/Lenyu-auto.sh<<-\EOF
+cat>files/usr/share/AlphaBotZ-auto.sh<<-\EOF
 #!/bin/bash
-# https://github.com/Lenyu2020/Actions-OpenWrt-x86
-# Actions-OpenWrt-x86 By Lenyu 20210505
+# https://github.com/AlphaBotZ/Action-OpenWrt-Builder
+# Action-OpenWrt-Builder By AlphaBotZ 20210505
 #path=$(dirname $(readlink -f $0))
 # cd ${path}
 #检测准备
-if [ ! -f  "/etc/lenyu_version" ]; then
+if [ ! -f  "/etc/AlphaBotZ_version" ]; then
 	echo
-	echo -e "\033[31m 该脚本在非Lenyu固件上运行，为避免不必要的麻烦，准备退出… \033[0m"
+	echo -e "\033[31m 该脚本在非AlphaBotZ固件上运行，为避免不必要的麻烦，准备退出… \033[0m"
 	echo
 	exit 0
 fi
@@ -335,29 +335,29 @@ fi
 cp -f /usr/bin/xray /etc/xray_backup/xray_backup
 
 # 获取固件云端版本号、内核版本号信息
-current_version=`cat /etc/lenyu_version`
-wget -qO- -t1 -T2 "https://api.github.com/repos/Lenyu2020/Actions-OpenWrt-x86/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
+current_version=`cat /etc/AlphaBotZ_version`
+wget -qO- -t1 -T2 "https://api.github.com/repos/AlphaBotZ/Action-OpenWrt-Builder/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g;s/v//g'  > /tmp/cloud_ts_version
 if [ -s  "/tmp/cloud_ts_version" ]; then
 	cloud_version=`cat /tmp/cloud_ts_version | cut -d _ -f 1`
 	cloud_kernel=`cat /tmp/cloud_ts_version | cut -d _ -f 2`
 	#固件下载地址
 	new_version=`cat /tmp/cloud_ts_version`
-	DEV_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
-	DEV_UEFI_URL=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
-	openwrt_dev=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev.md5
-	openwrt_dev_uefi=https://github.com/Lenyu2020/Actions-OpenWrt-x86/releases/download/${new_version}/openwrt_dev_uefi.md5
+	DEV_URL=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
+	DEV_UEFI_URL=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
+	openwrt_dev=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_dev.md5
+	openwrt_dev_uefi=https://github.com/AlphaBotZ/Action-OpenWrt-Builder/releases/download/${new_version}/openwrt_dev_uefi.md5
 else
 	echo "请检测网络或重试！"
 	exit 1
 fi
 ####
 Firmware_Type="$(grep 'DISTRIB_ARCH=' /etc/openwrt_release | cut -d \' -f 2)"
-echo $Firmware_Type > /etc/lenyu_firmware_type
+echo $Firmware_Type > /etc/AlphaBotZ_firmware_type
 echo
 #md5值验证，固件类型判断
 if [ ! -d /sys/firmware/efi ];then
 	if [ "$current_version" != "$cloud_version" ];then
-		wget -P /tmp "$DEV_URL" -O /tmp/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+		wget -P /tmp "$DEV_URL" -O /tmp/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
 		wget -P /tmp "$openwrt_dev" -O /tmp/openwrt_dev.md5
 		cd /tmp && md5sum -c openwrt_dev.md5
 		if [ $? != 0 ]; then
@@ -365,7 +365,7 @@ if [ ! -d /sys/firmware/efi ];then
 		  sleep 4
 		  exit
 		fi
-		sysupgrade /tmp/openwrt_x86-64-${new_version}_dev_Lenyu.img.gz
+		sysupgrade /tmp/openwrt_x86-64-${new_version}_dev_AlphaBotZ.img.gz
 	else
 		echo -e "\033[32m 本地已经是最新版本，还更个鸡巴毛啊… \033[0m"
 		echo
@@ -373,7 +373,7 @@ if [ ! -d /sys/firmware/efi ];then
 	fi
 else
 	if [ "$current_version" != "$cloud_version" ];then
-		wget -P /tmp "$DEV_UEFI_URL" -O /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+		wget -P /tmp "$DEV_UEFI_URL" -O /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 		wget -P /tmp "$openwrt_dev_uefi" -O /tmp/openwrt_dev_uefi.md5
 		cd /tmp && md5sum -c openwrt_dev_uefi.md5
 		if [ $? != 0 ]; then
@@ -381,7 +381,7 @@ else
 			sleep 1
 			exit
 		fi
-		sysupgrade /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_Lenyu.img.gz
+		sysupgrade /tmp/openwrt_x86-64-${new_version}_uefi-gpt_dev_AlphaBotZ.img.gz
 	else
 		echo -e "\033[32m 本地已经是最新版本，还更个鸡巴毛啊… \033[0m"
 		echo
@@ -392,7 +392,7 @@ fi
 exit 0
 EOF
 
-cat>files/usr/share/Lenyu-pw.sh<<-\EOF
+cat>files/usr/share/AlphaBotZ-pw.sh<<-\EOF
 #!/bin/sh
 # Define variables
 TEMP_DIR="/tmp/test"
