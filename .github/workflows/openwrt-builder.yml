@@ -86,44 +86,27 @@ jobs:
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
-       ccache: 'true' #'true' 默认值
-       #清空缓存
-       clean:  'false'  # 'false' 默认值
+       ccache: 'true'
+       clean:  'false'
        prefix: ${{ github.workspace }}/openwrt
     
-    - name: luci-app-openclash install
+    - name: Install packages
       run: |
-        cd openwrt
-        mkdir package/luci-app-openclash
-        cd package/luci-app-openclash
-        git init
-        git remote add -f origin https://github.com/vernesong/OpenClash.git
+        cd openwrt/package
+        # 并行克隆多个仓库
+        {
+          git clone https://github.com/vernesong/OpenClash.git luci-app-openclash &
+          git clone -b dev https://github.com/Blueplanet20120/luci-app-romupdate.git &
+          git clone https://github.com/messense/aliyundrive-webdav.git &
+          git clone https://github.com/kuoruan/luci-app-frpc.git &
+        }
+        wait
+        cd luci-app-openclash
         git config core.sparsecheckout true
         echo "luci-app-openclash" >> .git/info/sparse-checkout
         git pull --depth 1 origin master
         git branch --set-upstream-to=origin/master 
     
-    - name: luci-app-romupdate
-      run: |
-        cd openwrt/package    
-        git clone -b dev https://github.com/Blueplanet20120/luci-app-romupdate.git
-    
-    #- name: luci-theme-argon
-      #run: |
-        #cd openwrt/package/lean
-        #rm -rf luci-theme-argon
-        #git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git luci-theme-argon
-        
-    - name: aliyundrive-webdav
-      run: |
-        cd openwrt/package 
-        git clone https://github.com/messense/aliyundrive-webdav.git
-       
-    - name: luci-app-frpc
-      run: |
-        cd openwrt/package 
-        git clone https://github.com/kuoruan/luci-app-frpc.git
-        
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -165,7 +148,7 @@ jobs:
         cd openwrt
         echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config #Cache.Speedup
         make defconfig
-        make download -j8
+        make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
@@ -236,14 +219,18 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "release_tag=$(cat openwrt/wget/op_version1)" >> $GITHUB_OUTPUT
-        git -C openwrt log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
-        git -C openwrt/feeds/packages log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
-        git -C openwrt/feeds/luci log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
-        git -C openwrt/feeds/routing log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
-        git -C openwrt/feeds/telephony log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt
-        git -C openwrt/feeds/helloworld log --pretty=format:"%s(#By %an)"  --graph --since=4.hour >> release.txt
-        git -C openwrt/feeds/passwall log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt
-        git -C openwrt/package/luci-app-openclash log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt
+        # 并行生成日志
+        {
+          git -C openwrt log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt &
+          git -C openwrt/feeds/packages log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt &
+          git -C openwrt/feeds/luci log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt &
+          git -C openwrt/feeds/routing log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt &
+          git -C openwrt/feeds/telephony log --pretty=format:"%s(#By %an)"  --graph --since=3.hour >> release.txt &
+          git -C openwrt/feeds/helloworld log --pretty=format:"%s(#By %an)"  --graph --since=4.hour >> release.txt &
+          git -C openwrt/feeds/passwall log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt &
+          git -C openwrt/package/luci-app-openclash log --pretty=format:"%s(#By %an)"  --graph --since=8.hour >> release.txt &
+        }
+        wait
         test  ! -s release.txt && echo -e "\n* The source code is not updated." >> release.txt
         sed -i '1i ## Firmware Update Log' release.txt
         touch release.txt
