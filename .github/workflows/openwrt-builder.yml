@@ -99,6 +99,7 @@ jobs:
           git clone -b dev https://github.com/Blueplanet20120/luci-app-romupdate.git &
           git clone https://github.com/messense/aliyundrive-webdav.git &
           git clone https://github.com/kuoruan/luci-app-frpc.git &
+          git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git luci-app-nikki &
         }
         wait
         cd luci-app-openclash
