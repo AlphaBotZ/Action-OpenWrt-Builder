@@ -110,7 +110,7 @@ EOF
 
 cat>AlphaBotZ.sh<<-\EOOF
 #!/bin/bash
-AlphaBotZ_version="`date '+%y%m%d%H%M'`_dev_Len yu" 
+AlphaBotZ_version="`date '+%y%m%d%H%M'`_dev_AlphaBotZ" 
 echo $AlphaBotZ_version >  wget/DISTRIB_REVISION1 
 echo $AlphaBotZ_version | cut -d _ -f 1 >  files/etc/AlphaBotZ_version  
 #######
