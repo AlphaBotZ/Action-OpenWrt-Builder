@@ -27,12 +27,12 @@ env:
   FEEDS_CONF: official.feeds.conf.default
   CONFIG_FILE: x86/official-x86.config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: openwrt-21.02-diy-part2.sh
+  DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  FILE_NAME: x86_64_k6.6
+  FILE_NAME: x86_64
   PRODUCT_NAME: x86_64
 
 jobs:
