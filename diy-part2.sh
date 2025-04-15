@@ -85,6 +85,7 @@ merge_package https://github.com/ophub/luci-app-amlogic luci-app-amlogic
 merge_package https://github.com/openwrt/openwrt.git openwrt/package/libs/elfutils
 #svn co https://github.com/breakings/OpenWrt/trunk/general/gnupg feeds/packages/utils/gnupg
 #svn co https://github.com/breakings/OpenWrt/trunk/general/n2n_v2 package/lean/n2n_v2
+merge_package https://github.com/nikkinikki-org/OpenWrt-nikki luci-app-nikki
 
 # 编译 po2lmo (如果有po2lmo可跳过)
 pushd package/custom/luci-app-openclash/tools/po2lmo
